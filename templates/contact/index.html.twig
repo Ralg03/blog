@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block body %}
+    <div>
+        {% if name is defined %}
+            <h1>
+                Bonjour {{ name }}
+            </h1>
+        {% endif %}
+
+        {% if authentif is defined and authentif is not empty %}
+            <h1>
+               Contact actuel:
+
+               <li> Son Id est : {{ authentif.id }} </li>
+               <li> Son Nom est : {{ authentif.nom }} </li>
+               <li> Son Prénom est : {{ authentif.prenom }} </li>
+               <li> Son Sujet est : {{ authentif.sujet }} </li>
+               <li> Son Message est : {{ authentif.message }} </li>
+               {% if authentif.newsletter == true %}
+               <li> Newsletter : Actif </li>
+               {% elseif authentif.newsletter == false %}
+               <li> Newsletter : Pas actif </li>
+               {% endif %}
+
+        {% endif %}
+        {{ dump(contact) }}
+        <ul>
+            <h2> Ma liste d'abonnés :  </h2>
+            {% for contact in contact %}
+                <li><a href="{{ path('authentifId', {id:contact.id}) }}">La personne {{ contact.nom }}, {{ contact.prenom }} vous a demandé quelque chose</a></li>
+            {% endfor %}
+        </ul>
+
+        {% if city is defined and city is not empty %}
+            <p>
+                Vous êtes sur la ville de {{ city }}
+            </p>
+        {% endif %}
+        {{ form(form) }}
+    </div>
+{% endblock %}
